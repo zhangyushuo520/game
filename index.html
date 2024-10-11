@@ -11,7 +11,7 @@
             text-align: center;
         }
 
-     .container {
+    .container {
             margin-top: 50px;
         }
 
@@ -19,7 +19,7 @@
             color: #333;
         }
 
-     .question {
+    .question {
             font-size: 20px;
             margin-top: 20px;
         }
@@ -40,7 +40,7 @@
             margin-top: 10px;
         }
 
-     .result {
+    .result {
             font-size: 18px;
             color: #333;
             margin-top: 20px;
@@ -95,8 +95,11 @@
         <p>成功局数：<span id="successCountDisplay">0</span></p>
         <p>失败局数：<span id="failureCountDisplay">0</span></p>
         <p>倒计时：<span id="countdownDisplay"></span></p>
+    </div>
+
+    <div class="container">
         <button id="clearButton">清除分数</button>
-        <button id="startGameButton">开始对局</button>
+        <button id="startGameButton" onclick="startOrEndGame()">开始对局</button>
     </div>
 
     <script>
@@ -105,6 +108,7 @@
         let failureCount = 0;
         let countdown;
         let timer;
+        let isGameStarted = false;
 
         function updateDisplays() {
             document.getElementById('scoreDisplay').textContent = score;
@@ -199,15 +203,27 @@
             localStorage.removeItem('score');
         });
 
-        document.getElementById('startGameButton').addEventListener('click', function () {
-            score = 0;
-            updateDisplays();
-            localStorage.removeItem('score');
-            countdown = 6 * 60;
-            timer = setInterval(updateCountdown, 1000);
-            currentQuestion = generateArithmeticQuestion();
-            document.querySelector('.question').textContent = currentQuestion.question;
-        });
+        function startOrEndGame() {
+            if (!isGameStarted) {
+                // 游戏未开始，开始游戏
+                score = 0;
+                updateDisplays();
+                localStorage.removeItem('score');
+                countdown = 6 * 60;
+                timer = setInterval(updateCountdown, 1000);
+                currentQuestion = generateArithmeticQuestion();
+                document.querySelector('.question').textContent = currentQuestion.question;
+                document.getElementById('startGameButton').textContent = '结束对局';
+                isGameStarted = true;
+            } else {
+                // 游戏已开始，结束游戏
+                clearInterval(timer);
+                document.getElementById('startGameButton').textContent = '开始对局';
+                isGameStarted = false;
+                // 可以在这里添加更多结束游戏时的清理代码，比如重置其他相关状态等
+                alert("游戏已结束。");
+            }
+        }
 
         function updateCountdown() {
             const minutes = Math.floor(countdown / 60);
