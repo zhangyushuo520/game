@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智力闯关游戏</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+   .container {
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+   .question {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+   .result {
+      font-size: 18px;
+      color: #333;
+      margin-top: 20px;
+    }
+
+    #clearButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>智力闯关游戏</h1>
+    <div class="question"></div>
+    <input type="text" id="answerInput">
+    <button onclick="checkAnswer()">提交答案</button>
+    <div class="result"></div>
+    <p>当前分数：<span id="scoreDisplay">0</span></p>
+    <button id="clearButton">清除分数</button>
+  </div>
+
+  <script>
+    let score = 0;
+    if (localStorage.getItem('score')) {
+      score = parseInt(localStorage.getItem('score'));
+      document.getElementById('scoreDisplay').textContent = score;
+    }
+
+    function generateArithmeticQuestion() {
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      const operator = Math.random() < 0.5? '+' : '-';
+      return {
+        question: `${num1} ${operator} ${num2} =?`,
+        answer: operator === '+'? num1 + num2 : num1 - num2
+      };
+    }
+
+    let currentQuestion = generateArithmeticQuestion();
+    document.querySelector('.question').textContent = currentQuestion.question;
+
+    function checkAnswer() {
+      const answerInput = document.getElementById('answerInput');
+      const userAnswer = parseInt(answerInput.value.trim());
+      const correctAnswer = currentQuestion.answer;
+
+      if (userAnswer === correctAnswer) {
+        score++;
+        document.getElementById('scoreDisplay').textContent = score;
+        localStorage.setItem('score', score);
+        currentQuestion = generateArithmeticQuestion();
+        document.querySelector('.question').textContent = currentQuestion.question;
+        document.querySelector('.result').textContent = "正确！进入下一题。";
+      } else {
+        score -= 5;
+        document.getElementById('scoreDisplay').textContent = score;
+        localStorage.setItem('score', score);
+        document.querySelector('.result').textContent = "错误，请重新尝试。";
+      }
+      answerInput.value = "";
+    }
+
+    document.getElementById('clearButton').addEventListener('click', function () {
+      score = 0;
+      document.getElementById('scoreDisplay').textContent = score;
+      localStorage.removeItem('score');
+    });
+  </script>
+</body>
+
+</html>
