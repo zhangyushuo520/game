@@ -136,12 +136,12 @@
 
             switch (operator) {
                 case '+':
-                    num1 = Math.floor(Math.random() * 9999999);
-                    num2 = Math.floor(Math.random() * 9999999);
+                    num1 = Math.floor(Math.random() * 999999);
+                    num2 = Math.floor(Math.random() * 999999);
                     answer = num1 + num2;
                     break;
                 case '-':
-                    num1 = Math.floor(Math.random() * 9999999);
+                    num1 = Math.floor(Math.random() * 999999);
                     num2 = Math.floor(Math.random() * num1);
                     answer = num1 - num2;
                     break;
@@ -151,8 +151,8 @@
                     answer = num1 * num2;
                     break;
                 case '/':
-                    num2 = Math.floor(Math.random() * 999999) + 1;
-                    answer = Math.floor(Math.random() * 9999) + 1;
+                    num2 = Math.floor(Math.random() * 99999) + 1;
+                    answer = Math.floor(Math.random() * 999) + 1;
                     num1 = num2 * answer;
                     break;
             }
