@@ -56,7 +56,7 @@
             margin-top: 10px;
         }
 
-       .number-buttons {
+      .number-buttons {
             width: auto;
             display: flex;
             flex-direction: column;
@@ -67,7 +67,7 @@
             cursor: pointer;
         }
 
-       .number-button {
+      .number-button {
             padding: 10px 15px;
             font-size: 16px;
             background-color: #ddd;
@@ -118,9 +118,6 @@
         <p>倒计时：<span id="countdownDisplay"></span></p>
     </div>
 
-    <div class="container">
-        <button id="clearButton">清除分数</button>
-        <button id="startGameButton" onclick="startOrEndGame()">开始对局</button>
     </div>
 
     <div class="container number-buttons">
@@ -145,6 +142,10 @@
             <button class="number-button" onclick="deleteLastDigit()">D</button>
         </div>
     </div>
+
+    <div class="container">
+        <button id="clearButton">清除分数</button>
+        <button id="startGameButton" onclick="startOrEndGame()">开始对局</button>
 
     <script>
         let score = 0;
@@ -299,10 +300,38 @@
             const answerInput = document.getElementById('answerInput');
             answerInput.value = answerInput.value.slice(0, -1);
         }
-    </script>
-</body>
 
-</html>
+        // 添加播放音乐的功能
+        const musicButton = document.createElement('button');
+        musicButton.textContent = '播放音乐';
+        musicButton.style.position = 'absolute';
+        musicButton.style.top = '10px';
+        musicButton.style.left = '10px';
+        document.body.appendChild(musicButton);
+
+        musicButton.addEventListener('click', function () {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'audio/*';
+            fileInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const audio = new Audio(e.target.result);
+                    audio.play();
+                    // 可以考虑将音频数据存储在 IndexedDB 等本地存储中以实现缓存，但这需要更多代码实现
+                };
+                reader.readAsDataURL(file);
+            });
+            fileInput.click();
+        });
+    </script>
+
+    <video autoplay loop muted style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        <source src=".static/01.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
 </body>
 
 </html>
