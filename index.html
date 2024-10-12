@@ -11,7 +11,7 @@
             text-align: center;
         }
 
-    .container {
+       .container {
             margin-top: 50px;
         }
 
@@ -19,7 +19,7 @@
             color: #333;
         }
 
-    .question {
+       .question {
             font-size: 20px;
             margin-top: 20px;
         }
@@ -40,7 +40,7 @@
             margin-top: 10px;
         }
 
-    .result {
+       .result {
             font-size: 18px;
             color: #333;
             margin-top: 20px;
@@ -54,6 +54,23 @@
             border: none;
             cursor: pointer;
             margin-top: 10px;
+        }
+
+       .number-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+       .number-button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
         }
     </style>
 </head>
@@ -100,6 +117,27 @@
     <div class="container">
         <button id="clearButton">清除分数</button>
         <button id="startGameButton" onclick="startOrEndGame()">开始对局</button>
+    </div>
+
+    <div class="container number-buttons">
+        <div style="display: flex;">
+            <button class="number-button" onclick="appendNumber(1)">1</button>
+            <button class="number-button" onclick="appendNumber(2)">2</button>
+            <button class="number-button" onclick="appendNumber(3)">3</button>
+        </div>
+        <div style="display: flex;">
+            <button class="number-button" onclick="appendNumber(4)">4</button>
+            <button class="number-button" onclick="appendNumber(5)">5</button>
+            <button class="number-button" onclick="appendNumber(6)">6</button>
+        </div>
+        <div style="display: flex;">
+            <button class="number-button" onclick="appendNumber(7)">7</button>
+            <button class="number-button" onclick="appendNumber(8)">8</button>
+            <button class="number-button" onclick="appendNumber(9)">9</button>
+        </div>
+        <div style="display: flex;">
+            <button class="number-button" onclick="appendNumber(0)">0</button>
+        </div>
     </div>
 
     <script>
@@ -240,6 +278,11 @@
                 score = 0;
                 alert("可惜了，时间到，未过关。");
             }
+        }
+
+        function appendNumber(number) {
+            const answerInput = document.getElementById('answerInput');
+            answerInput.value += number;
         }
     </script>
 </body>
